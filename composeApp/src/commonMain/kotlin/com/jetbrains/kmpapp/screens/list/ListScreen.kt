@@ -26,13 +26,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import com.jetbrains.kmpapp.data.MuseumObject
+import com.google.fhir.model.r5.Patient
 import com.jetbrains.kmpapp.screens.EmptyScreenContent
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ListScreen(
-    navigateToDetails: (objectId: Int) -> Unit
+    navigateToDetails: (objectId: String) -> Unit
 ) {
     val viewModel = koinViewModel<ListViewModel>()
     val objects by viewModel.objects.collectAsStateWithLifecycle()
@@ -51,8 +51,8 @@ fun ListScreen(
 
 @Composable
 private fun ObjectGrid(
-    objects: List<MuseumObject>,
-    onObjectClick: (Int) -> Unit,
+    objects: List<Patient>,
+    onObjectClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -60,10 +60,10 @@ private fun ObjectGrid(
         modifier = modifier.fillMaxSize(),
         contentPadding = WindowInsets.safeDrawing.asPaddingValues(),
     ) {
-        items(objects, key = { it.objectID }) { obj ->
+        items(objects, key = { it.id!! }) { obj ->
             ObjectFrame(
                 obj = obj,
-                onClick = { onObjectClick(obj.objectID) },
+                onClick = { onObjectClick(obj.id!!) },
             )
         }
     }
@@ -71,7 +71,7 @@ private fun ObjectGrid(
 
 @Composable
 private fun ObjectFrame(
-    obj: MuseumObject,
+    obj: Patient,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -80,20 +80,8 @@ private fun ObjectFrame(
             .padding(8.dp)
             .clickable { onClick() }
     ) {
-        AsyncImage(
-            model = obj.primaryImageSmall,
-            contentDescription = obj.title,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .background(Color.LightGray),
-        )
-
-        Spacer(Modifier.height(2.dp))
-
-        Text(obj.title, style = MaterialTheme.typography.titleMedium)
-        Text(obj.artistDisplayName, style = MaterialTheme.typography.bodyMedium)
-        Text(obj.objectDate, style = MaterialTheme.typography.bodySmall)
+        Text(obj.name?.singleOrNull()?.given?.singleOrNull()?.value?: "", style = MaterialTheme.typography.titleMedium)
+        Text(obj.birthDate?.value.toString(), style = MaterialTheme.typography.bodyMedium)
+        Text(obj.gender?.value ?: "", style = MaterialTheme.typography.bodySmall)
     }
 }

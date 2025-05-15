@@ -1,4 +1,4 @@
-rootProject.name = "KMP-App-Template"
+rootProject.name = "Kotlin-FHIR-Demo"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -25,6 +25,10 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven {
+            url = uri("http://adt-proxy.uplink2.goog:999/VRGPXc3NRSyIqU7z6ChZ-Q")
+            isAllowInsecureProtocol = true
+        }
     }
 }
 

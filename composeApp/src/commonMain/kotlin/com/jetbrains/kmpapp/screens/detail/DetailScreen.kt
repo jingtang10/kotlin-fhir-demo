@@ -1,12 +1,10 @@
 package com.jetbrains.kmpapp.screens.detail
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -26,33 +24,25 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
-import com.jetbrains.kmpapp.data.MuseumObject
+import com.google.fhir.model.r5.Patient
 import com.jetbrains.kmpapp.screens.EmptyScreenContent
-import kmp_app_template.composeapp.generated.resources.Res
-import kmp_app_template.composeapp.generated.resources.back
-import kmp_app_template.composeapp.generated.resources.label_artist
-import kmp_app_template.composeapp.generated.resources.label_credits
-import kmp_app_template.composeapp.generated.resources.label_date
-import kmp_app_template.composeapp.generated.resources.label_department
-import kmp_app_template.composeapp.generated.resources.label_dimensions
-import kmp_app_template.composeapp.generated.resources.label_medium
-import kmp_app_template.composeapp.generated.resources.label_repository
-import kmp_app_template.composeapp.generated.resources.label_title
+import kotlin_fhir_demo.composeapp.generated.resources.Res
+import kotlin_fhir_demo.composeapp.generated.resources.back
+import kotlin_fhir_demo.composeapp.generated.resources.label_artist
+import kotlin_fhir_demo.composeapp.generated.resources.label_date
+import kotlin_fhir_demo.composeapp.generated.resources.label_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailScreen(
-    objectId: Int,
+    objectId: String,
     navigateBack: () -> Unit,
 ) {
     val viewModel = koinViewModel<DetailViewModel>()
@@ -69,7 +59,7 @@ fun DetailScreen(
 
 @Composable
 private fun ObjectDetails(
-    obj: MuseumObject,
+    obj: Patient,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -92,27 +82,13 @@ private fun ObjectDetails(
                 .verticalScroll(rememberScrollState())
                 .padding(paddingValues)
         ) {
-            AsyncImage(
-                model = obj.primaryImageSmall,
-                contentDescription = obj.title,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.LightGray)
-            )
-
             SelectionContainer {
                 Column(Modifier.padding(12.dp)) {
-                    Text(obj.title, style = MaterialTheme.typography.headlineMedium)
+                    Text(obj.name.toString(), style = MaterialTheme.typography.headlineMedium)
                     Spacer(Modifier.height(6.dp))
-                    LabeledInfo(stringResource(Res.string.label_title), obj.title)
-                    LabeledInfo(stringResource(Res.string.label_artist), obj.artistDisplayName)
-                    LabeledInfo(stringResource(Res.string.label_date), obj.objectDate)
-                    LabeledInfo(stringResource(Res.string.label_dimensions), obj.dimensions)
-                    LabeledInfo(stringResource(Res.string.label_medium), obj.medium)
-                    LabeledInfo(stringResource(Res.string.label_department), obj.department)
-                    LabeledInfo(stringResource(Res.string.label_repository), obj.repository)
-                    LabeledInfo(stringResource(Res.string.label_credits), obj.creditLine)
+                    LabeledInfo(stringResource(Res.string.label_title), obj.gender.toString())
+                    LabeledInfo(stringResource(Res.string.label_artist), obj.birthDate.toString())
+                    LabeledInfo(stringResource(Res.string.label_date), obj.address.toString())
                 }
             }
         }

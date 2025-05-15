@@ -1,0 +1,35 @@
+[
+  {
+    "resourceType" : "Patient",
+    "id" : "pat1",
+    "active" : true,
+    "name" : [{
+      "use" : "official",
+      "family" : "Duck",
+      "given" : ["Donald"]
+    }],
+    "gender" : "male"
+  },
+  {
+    "resourceType" : "Patient",
+    "id" : "pat2",
+    "active" : true,
+    "name" : [{
+      "use" : "official",
+      "family" : "Tang",
+      "given" : ["Jing"]
+    }],
+    "gender" : "male"
+  },
+  {
+    "resourceType" : "Patient",
+    "id" : "pat3",
+    "active" : true,
+    "name" : [{
+      "use" : "official",
+      "family" : "Jajoo",
+      "given" : ["Madhuram"]
+    }],
+    "gender" : "male"
+  }
+]

@@ -19,7 +19,7 @@ import kotlinx.serialization.Serializable
 object ListDestination
 
 @Serializable
-data class DetailDestination(val objectId: Int)
+data class DetailDestination(val objectId: String)
 
 @Composable
 fun App() {
