@@ -1,5 +1,6 @@
 package com.google.fhir.model.demo.demo
 
+import androidx.lifecycle.ViewModel
 import com.google.fhir.model.r5.Patient
 import com.google.fhir.model.r5.configureR5
 import kotlin_fhir_demo.composeapp.generated.resources.Res
@@ -17,7 +18,7 @@ private val json = Json {
   configureR5()
 }
 
-class PatientViewModel {
+class PatientViewModel : ViewModel() {
   private val _patients = MutableStateFlow<List<Patient>>(emptyList())
   val patients: StateFlow<List<Patient>> = _patients.asStateFlow()
 

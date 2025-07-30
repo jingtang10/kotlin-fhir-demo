@@ -2,7 +2,7 @@ package com.google.fhir.model.demo.demo
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,15 +20,14 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(patientViewModel: PatientViewModel = viewModel { PatientViewModel() }) {
   AppTheme {
     Surface {
       val navController: NavHostController = rememberNavController()
-      val viewModel = remember { PatientViewModel() }
       NavHost(navController = navController, startDestination = PatientListDestination) {
         composable<PatientListDestination> {
           PatientList(
-            viewModel = viewModel,
+            viewModel = patientViewModel,
             navigateToDetails = { patient ->
               navController.navigate(PatientDetailDestination(patient.id!!))
             },
@@ -36,7 +35,7 @@ fun App() {
         }
         composable<PatientDetailDestination> { backStackEntry ->
           PatientDetails(
-            viewModel = viewModel,
+            viewModel = patientViewModel,
             id = backStackEntry.toRoute<PatientDetailDestination>().id,
             onBackClick = { navController.popBackStack() },
           )
