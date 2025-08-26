@@ -61,7 +61,7 @@ fun PatientDetails(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
       ) {
         Column(Modifier.padding(16.dp)) {
-          LabeledInfo(stringResource(Res.string.label_gender), patient.gender?.value ?: "")
+          LabeledInfo(stringResource(Res.string.label_gender), patient.gender?.value.toString())
           LabeledInfo(
             stringResource(Res.string.label_date_of_birth),
             patient.birthDate?.value.toString(),
@@ -72,7 +72,7 @@ fun PatientDetails(
           )
           LabeledInfo(
             stringResource(Res.string.label_telecom),
-            patient.telecom?.firstOrNull()?.value?.value ?: "",
+            patient.telecom.firstOrNull()?.value?.value ?: "",
           )
           LabeledInfoMultiLine(stringResource(Res.string.label_address), patient.address.addresses)
         }
