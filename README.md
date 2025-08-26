@@ -5,6 +5,9 @@
 This is a demo app for the [Kotlin FHIR](https://github.com/google/kotlin-fhir/) Multiplatform
 library targeting Android, iOS, and Web. 
 
+![Screenshot](images/screenshot.png)
+*Demo app on Android, iOS, and Web*
+
 ## User guide
 
 * To run the Android app, open the project in Android Studio and set up an Android Run configuration
